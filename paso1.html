@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 1: La Cruz Blanca</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Paso 1: La Cruz Blanca</h2>
+        <p>El objetivo es formar una cruz en la cara blanca. Observa cómo cada arista blanca debe coincidir también con el color del centro lateral (verde con verde, rojo con rojo, etc).</p>
+        
+        <div id="cuboPaso1" class="cubo-container"></div>
+
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-outline">Paso anterior</a>
+            <a href="paso2.html" class="btn">Paso siguiente</a>
+        </div>
+    </div>
+
+    <script src="AnimCube3.js"></script>
+    <script>
+        /* EXPLICACIÓN DE LOS PARÁMETROS:
+         - move: El algoritmo que arma la cruz (5 movimientos de ejemplo).
+         - initrevmove=#: Le dice al simulador "revuelve el cubo aplicando el algoritmo al revés antes de empezar". Así, al darle play, se arma.
+         - facelets: Una cadena mágica de 54 letras que pinta solo la cruz blanca y los centros, dejando el resto en gris ('d' de dark gray).
+        */
+        
+        var parametros ="id=cuboPaso1" + 
+                        "&move=F R' D' R F2" + 
+                        "&initrevmove=#" + 
+                        "&facelets=dwdwwwdwdddddydddddddggdddddddbbdddddoddodddddddrrdddd";
+
+        AnimCube3(parametros);
+    </script>
+
+</body>
+</html>

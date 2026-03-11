@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 7: ¡El Final!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Paso 7: Orientar las Esquinas</h2>
+        <p>Aplica <strong>Bajo, Izquierda, Subo, Recupero (R' D' R D)</strong> hasta que la esquina amarilla mire hacia arriba. El cubo se verá desarmado abajo, <strong>¡no entres en pánico!</strong> Mantén tu cara frontal, gira solo la capa superior (U) para traer la siguiente esquina a la derecha y repite. ¡Al final todo se arreglará solo!</p>
+        
+        <div id="cuboPaso7" class="cubo-container"></div>
+
+        <div class="nav-buttons">
+            <a href="paso6.html" class="btn btn-outline">Paso anterior</a>
+            <a href="index.html" class="btn">¡Volver al inicio!</a>
+        </div>
+    </div>
+
+    <script src="AnimCube3.js"></script>
+    <script>
+        /* Desglose del gran final:
+           - move: La secuencia aplica "R' D' R D" dos veces para resolver la primera esquina, 
+                   hace "U" para traer la siguiente, aplica "R' D' R D" cuatro veces para 
+                   resolverla (lo que también restaura la parte de abajo), y termina con "U'".
+           - facelets: Todos los colores encendidos, el cubo está a un paso de la victoria.
+        */
+        var parametros = "id=cuboPaso7" + 
+                        "&move=R' D' R D R' D' R D U R' D' R D R' D' R D R' D' R D R' D' R D U'" + 
+                        "&initrevmove=#" + 
+                        "&facelets=yyyyyyyyy" + // U: Toda amarilla
+                        "wwwwwwwww" +           // D: Toda blanca
+                        "ggggggggg" +           // F: Toda verde
+                        "bbbbbbbbb" +           // B: Toda azul
+                        "ooooooooo" +           // L: Toda naranja
+                        "rrrrrrrrr";            // R: Toda roja
+
+        AnimCube3(parametros);
+    </script>
+
+</body>
+</html>

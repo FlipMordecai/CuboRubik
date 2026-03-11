@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 2: Las Esquinas Blancas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Paso 2: Las Esquinas Blancas</h2>
+        <p>Busca una esquina en la capa superior que tenga color blanco y ponla sobre el lugar donde debe ir. Dependiendo de si la vas a insertar en la derecha o en la izquierda, usa el algoritmo correspondiente. <br><em>(Tip: Puedes girar el cubo arrastrándolo con el mouse)</em>.</p>
+        
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="cambiarCaso('derecha', this)">Mano Derecha</button>
+                <button class="tab-btn" onclick="cambiarCaso('izquierda', this)">Mano Izquierda (Espejo)</button>
+            </div>
+
+            <div id="descCaso">
+                <strong>Algoritmo: R U R' U'</strong><br>
+                Aplica "Subo, Izquierda, Bajo, Recupero" con la mano derecha.
+            </div>
+
+            <div id="cuboPaso2" class="cubo-container"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="paso1.html" class="btn btn-outline">Paso anterior</a>
+            <a href="paso3.html" class="btn">Paso siguiente</a>
+        </div>
+    </div>
+
+   <script src="AnimCube3.js"></script>
+    <script>
+        // Tu mapeo de colores exacto
+        const coloresPaso2 = 
+            "ddddydddd" + // U
+            "wwwwwwwww" + // D
+            "ddgdggddg" + // F
+            "ddbdbbddb" + // B
+            "ddddodooo" + // L
+            "ddrdrrddr";  // R
+
+        // Añadimos el parámetro "pos" a cada caso
+        const casos = {
+            'derecha': { 
+                move: "R U R' U'", 
+                pos: "lluu", // Vista por defecto (muestra Arriba, Frente y Derecha)
+                texto: "<strong>Algoritmo: R U R' U'</strong><br>Aplica 'Subo, Izquierda, Bajo, Recupero' con la mano derecha." 
+            },
+            'izquierda': { 
+                move: "L' U' L U", 
+                pos: "lldd", // Vista espejo (Gira el cubo para mostrar Arriba, Frente e Izquierda)
+                texto: "<strong>Algoritmo: L' U' L U</strong><br>El caso espejo. Aplica los mismos movimientos pero con tu mano izquierda." 
+            }
+        };
+
+        function cambiarCaso(lado, botonElemento) {
+            let botones = document.querySelectorAll('.tab-btn');
+            botones.forEach(btn => btn.classList.remove('active'));
+            if(botonElemento) botonElemento.classList.add('active');
+
+            document.getElementById('descCaso').innerHTML = casos[lado].texto;
+            document.getElementById('cuboPaso2').innerHTML = '';
+            
+            // Agregamos "&position=" + casos[lado].pos a la cadena
+            let parametros = "id=cuboPaso2" + 
+                             "&move=" + casos[lado].move + 
+                             "&initrevmove=#" + 
+                             "&movetext=1" + 
+                             "&position=" + casos[lado].pos + 
+                             "&facelets=" + coloresPaso2;
+
+            AnimCube3(parametros);
+        }
+
+        cambiarCaso('derecha', document.querySelector('.tab-btn.active'));
+    </script>
+
+</body>
+</html>

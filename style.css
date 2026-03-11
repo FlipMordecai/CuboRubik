@@ -1,0 +1,136 @@
+/* style.css */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fafafa;
+    color: #222;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* Botones minimalistas */
+.btn {
+    display: inline-block;
+    background-color: #222;
+    color: #fff;
+    padding: 12px 28px;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    margin: 10px 5px;
+    border: 2px solid #222;
+}
+
+.btn:hover {
+    background-color: #444;
+    border-color: #444;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #222;
+}
+
+.btn-outline:hover {
+    background-color: #eee;
+    border-color: #ccc;
+}
+
+.nav-buttons {
+    margin-top: 40px;
+}
+
+/* Contenedor del simulador AnimCube3 */
+.cubo-container {
+    width: 300px;
+    height: 330px;
+    margin: 0 auto;
+}
+
+
+/* --- Sistema de Pestañas para Notación --- */
+.tabs-container {
+    margin: 30px 0;
+    width: 100%;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    background-color: transparent;
+    border: 2px solid transparent;
+    border-bottom: 2px solid #ccc;
+    color: #666;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: #222;
+    border-bottom-color: #666;
+}
+
+.tab-btn.active {
+    color: #222;
+    border-bottom-color: #222;
+}
+
+#descNotacion {
+    min-height: 60px;
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+
+/* Estilo para imágenes de referencia en los pasos */
+.img-referencia {
+    display: block;
+    margin: 20px auto 30px auto;
+    max-width: 100%;
+    height: auto;
+    width: 550px; /* Tamaño original de tu imagen */
+}

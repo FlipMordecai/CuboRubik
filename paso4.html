@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 4: La Cruz Amarilla</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Paso 4: La Cruz Amarilla</h2>
+        <p>Observa la cara superior (amarilla). Ignora las esquinas por ahora y fíjate solo en los centros y las aristas. Identifica cuál de estos 4 casos tienes y aplica el algoritmo para formar la cruz.</p>
+        
+        <img src="imagenes/cruz-amarilla.png" alt="Casos de la Cruz Amarilla: Punto, L, Línea, Completa" class="img-referencia">
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="cambiarCaso('linea', this)">Línea ( l )</button>
+                <button class="tab-btn" onclick="cambiarCaso('angulo', this)">Ángulo ( L )</button>
+                <button class="tab-btn" onclick="cambiarCaso('centro', this)">Centro ( . )</button>
+                <button class="tab-btn" style="color: #27ae60;" onclick="cambiarCaso('completa', this)">Completa ( + )</button>
+            </div>
+
+            <div id="descCaso">
+                <strong>Algoritmo: F R U R' U' F'</strong><br>
+                Sostén la línea de forma horizontal y aplica el algoritmo una vez.
+            </div>
+
+            <div id="cuboPaso4" class="cubo-container"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="paso3.html" class="btn btn-outline">Paso anterior</a>
+            <a href="paso5.html" class="btn">Paso siguiente</a>
+        </div>
+    </div>
+
+    <script src="AnimCube3.js"></script>
+    <script>
+        const coloresPaso4 = 
+            "dydyyydyd" + // U
+            "wwwwwwwww" + // D
+            "dggdggdgg" + // F
+            "dbbdbbdbb" + // B
+            "dddoooooo" + // L
+            "drrdrrdrr";  // R
+
+        const casos = {
+            'linea': { 
+                move: "F R U R' U' F'", 
+                texto: "<strong>Algoritmo: F (R U R' U') F'</strong><br>Sostén la línea amarilla de forma <strong>horizontal</strong> (de izquierda a derecha) y aplica el algoritmo." 
+            },
+            'angulo': { 
+                move: "F R U R' U' R U R' U' F'", 
+                texto: "<strong>Algoritmo: F (R U R' U')x2 F'</strong><br>Coloca la 'L' pequeña en la esquina <strong>superior izquierda</strong> (Atrás-Izquierda). Es el mismo algoritmo, pero haces <em>'Subo, Izq, Bajo, Recupero'</em> <strong>dos veces</strong> antes de regresar la cara Frontal." 
+            },
+            'centro': {
+                move: "F R U R' U' F' U2 F R U R' U' R U R' U' F'",
+                texto: "<strong>Secuencia: Línea + Ángulo</strong><br>Si solo tienes el punto, aplica el algoritmo de la <strong>Línea</strong>. Eso formará una 'L'. Acomódala arriba a la izquierda (con U2) y aplica el algoritmo del <strong>Ángulo</strong>."
+            },
+            'completa': {
+                move: "U U'",
+                texto: "<strong>¡Qué suerte! Ya tienes la cruz.</strong><br>A veces el cubo se salta pasos por sí solo. Ignora las esquinas y avanza directamente al <strong>Paso 5</strong>."
+            }
+        };
+
+        function cambiarCaso(caso, botonElemento) {
+            let botones = document.querySelectorAll('.tab-btn');
+            botones.forEach(btn => btn.classList.remove('active'));
+            if(botonElemento) botonElemento.classList.add('active');
+
+            document.getElementById('descCaso').innerHTML = casos[caso].texto;
+            document.getElementById('cuboPaso4').innerHTML = '';
+            
+            let parametros = "id=cuboPaso4" + 
+                             "&move=" + casos[caso].move + 
+                             "&initrevmove=#" + 
+                             "&movetext=1" + 
+                             "&position=lluu" + 
+                             "&facelets=" + coloresPaso4;
+
+            AnimCube3(parametros);
+        }
+
+        cambiarCaso('linea', document.querySelector('.tab-btn.active'));
+    </script>
+
+</body>
+</html>

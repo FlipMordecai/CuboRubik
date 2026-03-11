@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 5: Alinear la Cruz Amarilla</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Paso 5: Alinear la Cruz Amarilla</h2>
+        <p>Gira la capa superior (U) intentando que los colores de las aristas amarillas coincidan con los centros laterales. Busca que <strong>solo una</strong> arista coincida. Si tienes una, ponla mirando hacia ti. Si tienes el caso especial, revisa la pestaña.</p>
+        
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="cambiarCaso('estandar', this)">Caso Estándar (3 mal, 1 bien)</button>
+                <button class="tab-btn" style="color: #c0392b;" onclick="cambiarCaso('especial', this)">Caso Especial (Ninguna o 2 bien)</button>
+            </div>
+
+            <div id="descCaso">
+                <strong>Algoritmo: R U R' U R U2 R'</strong><br>
+                Pon la arista que SÍ coincide en la cara <strong>Frontal</strong> y aplica el algoritmo.
+            </div>
+
+            <div id="cuboPaso5" class="cubo-container"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="paso4.html" class="btn btn-outline">Paso anterior</a>
+            <a href="paso6.html" class="btn">Paso siguiente</a>
+        </div>
+    </div>
+
+    <script src="AnimCube3.js"></script>
+    <script>
+        // Usamos tu base de F2L intacta, pero encendemos la arista superior de cada cara
+        const coloresPaso5 = 
+            "dydyyydyd" + // U: Cruz amarilla
+            "wwwwwwwww" + // D: Cara inferior blanca armada
+            "dgggggdgg" + // F: F2L verde + arista superior verde
+            "dbbbbbdbb" + // B: F2L azul + arista superior azul
+            "dodoooooo" + // L: F2L naranja + arista superior naranja
+            "drrrrrdrr";  // R: F2L rojo + arista superior roja
+
+        // Definimos los casos
+            const casos = {
+                'estandar': { 
+                    move: "R U R' U R U2 R'", 
+                    pos: "lluu", 
+                    texto: "<strong>Algoritmo: R U R' U R U2 R'</strong><br>Sostén el cubo de modo que la arista que <strong>sí coincide</strong> esté frente a ti. Aplica el algoritmo una vez (o dos) hasta que todas coincidan." 
+                },
+                'especial': { 
+                    // Hacemos el Sune en R, acomodamos con U, y hacemos el Sune en B (sin girar el cubo)
+                    move: "R U R' U R U2 R' U B U B' U B U2 B'", 
+                    pos: "lluu", 
+                    texto: "<strong>Caso Especial: No puedes dejar SOLO UNA bien.</strong><br>Aplica el algoritmo desde <strong>cualquier lado</strong>. Al hacerlo, forzarás al cubo a darte una sola arista correcta. Acomódala de frente y repítelo. <em>(Dale a Play para ver el proceso completo sin rotar el cubo)</em>." 
+                }
+            };
+
+        // Función para cambiar de caso
+        function cambiarCaso(caso, botonElemento) {
+            let botones = document.querySelectorAll('.tab-btn');
+            botones.forEach(btn => btn.classList.remove('active'));
+            if(botonElemento) botonElemento.classList.add('active');
+
+            document.getElementById('descCaso').innerHTML = casos[caso].texto;
+            document.getElementById('cuboPaso5').innerHTML = '';
+            
+            // Cargamos AnimCube3 
+            let parametros = "id=cuboPaso5" + 
+                             "&move=" + casos[caso].move + 
+                             "&initrevmove=#" + 
+                             "&movetext=1" + 
+                             "&position=" + casos[caso].pos + 
+                             "&facelets=" + coloresPaso5;
+
+            AnimCube3(parametros);
+        }
+
+        // Cargar el caso estándar por defecto
+        cambiarCaso('estandar', document.querySelector('.tab-btn.active'));
+    </script>
+
+</body>
+</html>

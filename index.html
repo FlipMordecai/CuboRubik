@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo armar el Cubo de Rubik</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>El Cubo de Rubik</h1>
+        <p>Aprende a resolver el rompecabezas más famoso del mundo de forma lógica, sin frustraciones y en 7 sencillos pasos.</p>
+        
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+        <h2>La Notación Básica</h2>
+        <p style="font-size: 1rem;">Antes de empezar, debes saber que cada cara tiene una letra. Si la letra está sola, el giro es <strong>horario</strong> (como las manecillas del reloj). Si tiene un apóstrofe ('), el giro es <strong>antihorario</strong> (inverso).</p>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="cambiarGiro('U', this)">U</button>
+                <button class="tab-btn" onclick="cambiarGiro('D', this)">D</button>
+                <button class="tab-btn" onclick="cambiarGiro('R', this)">R</button>
+                <button class="tab-btn" onclick="cambiarGiro('L', this)">L</button>
+                <button class="tab-btn" onclick="cambiarGiro('F', this)">F</button>
+                <button class="tab-btn" onclick="cambiarGiro('B', this)">B</button>
+            </div>
+
+            <div id="descNotacion">
+                <strong>U (Up / Arriba):</strong> Gira la capa superior en sentido horario. Su inverso es <strong>U'</strong>.
+            </div>
+
+            <div id="cuboNotacion" class="cubo-container"></div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+        <a href="paso1.html" class="btn">¡Inicia por el paso 1!</a>
+    </div>
+
+    <script src="AnimCube3.js"></script>
+    <script>
+        // Diccionario con la información de cada giro
+        const giros = {
+            'U': { move: "U U'", texto: "<strong>U (Up / Arriba):</strong> Gira la capa superior en sentido horario. Su inverso es <strong>U'</strong>." },
+            'D': { move: "D D'", texto: "<strong>D (Down / Abajo):</strong> Gira la capa inferior en sentido horario. Su inverso es <strong>D'</strong>." },
+            'R': { move: "R R'", texto: "<strong>R (Right / Derecha):</strong> Gira la capa derecha en sentido horario. Su inverso es <strong>R'</strong>." },
+            'L': { move: "L L'", texto: "<strong>L (Left / Izquierda):</strong> Gira la capa izquierda en sentido horario. Su inverso es <strong>L'</strong>." },
+            'F': { move: "F F'", texto: "<strong>F (Front / Frente):</strong> Gira la capa frontal en sentido horario. Su inverso es <strong>F'</strong>." },
+            'B': { move: "B B'", texto: "<strong>B (Back / Atrás):</strong> Gira la capa trasera en sentido horario. Su inverso es <strong>B'</strong>." }
+        };
+
+        // Función que se ejecuta al presionar un botón
+        function cambiarGiro(cara, botonElemento) {
+            // 1. Quitar la clase 'active' de todos los botones y ponérsela al que se hizo clic
+            let botones = document.querySelectorAll('.tab-btn');
+            botones.forEach(btn => btn.classList.remove('active'));
+            if(botonElemento) botonElemento.classList.add('active');
+
+            // 2. Actualizar el texto descriptivo
+            document.getElementById('descNotacion').innerHTML = giros[cara].texto;
+
+            // 3. Limpiar el contenedor del cubo para evitar duplicados
+            document.getElementById('cuboNotacion').innerHTML = '';
+
+            // 4. Volver a cargar el AnimCube3 con el nuevo giro.
+            // Omitimos "facelets" para que el cubo aparezca con todos sus colores.
+            AnimCube3("id=cuboNotacion&move=" + giros[cara].move + "&speed=15");
+        }
+
+        // Inicializar el cubo con el giro 'U' al cargar la página por primera vez
+        cambiarGiro('U', document.querySelector('.tab-btn.active'));
+    </script>
+
+</body>
+</html>

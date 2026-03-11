@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 6: Posicionar las Esquinas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Paso 6: Posicionar las Esquinas</h2>
+        <p>Busca <strong>una</strong> esquina que ya esté en su lugar correcto (no importa si el amarillo no mira hacia arriba, solo que sus 3 colores coincidan con los centros vecinos). Si tienes una, ponla en la esquina <strong>Frontal-Derecha</strong>. Si no tienes ninguna, revisa el caso especial.</p>
+        
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="cambiarCaso('estandar', this)">Caso Estándar (1 bien, 3 mal)</button>
+                <button class="tab-btn" style="color: #c0392b;" onclick="cambiarCaso('especial', this)">Caso Especial (Ninguna bien)</button>
+            </div>
+
+            <div id="descCaso">
+                <strong>Algoritmo: U R U' L' U R' U' L</strong><br>
+                Sostén la esquina correcta en la parte <strong>Frontal-Derecha</strong> y aplica el algoritmo para rotar las otras tres.
+            </div>
+
+            <div id="cuboPaso6" class="cubo-container"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="paso5.html" class="btn btn-outline">Paso anterior</a>
+            <a href="paso7.html" class="btn">Paso siguiente</a>
+        </div>
+    </div>
+
+    <script src="AnimCube3.js"></script>
+    <script>
+        // En este paso encendemos TODO el cubo, porque el usuario necesita ver 
+        // los 3 colores de las esquinas para saber si están en su "barrio" correcto.
+        const coloresPaso6 = 
+            "yyyyyyyyy" + // U: Toda amarilla
+            "wwwwwwwww" + // D: Toda blanca
+            "ggggggggg" + // F: Toda verde
+            "bbbbbbbbb" + // B: Toda azul
+            "ooooooooo" + // L: Toda naranja
+            "rrrrrrrrr";  // R: Toda roja
+
+        // Definimos los dos casos
+        const casos = {
+            'estandar': { 
+                move: "U R U' L' U R' U' L", 
+                pos: "lluu", 
+                texto: "<strong>Algoritmo: U R U' L' U R' U' L</strong><br>La esquina Frontal-Derecha se quedará en su lugar, mientras que las otras tres rotarán. Aplícalo una vez (o dos si es necesario) hasta que todas estén en su sitio." 
+            },
+            'especial': { 
+                // Niklas normal, seguido de un Niklas ejecutado en las caras B y F para no rotar el cubo
+                move: "U R U' L' U R' U' L U B U' F' U B' U' F", 
+                pos: "lluu", 
+                texto: "<strong>Caso Especial: Ninguna esquina está en su lugar.</strong><br>Aplica el algoritmo desde <strong>cualquier lado</strong>. Esto forzará a que UNA esquina se acomode. Búscala, ponla en la posición Frontal-Derecha y repite el algoritmo. <em>(Dale Play para ver el proceso)</em>." 
+            }
+        };
+
+        // Función para cambiar de caso
+        function cambiarCaso(caso, botonElemento) {
+            let botones = document.querySelectorAll('.tab-btn');
+            botones.forEach(btn => btn.classList.remove('active'));
+            if(botonElemento) botonElemento.classList.add('active');
+
+            document.getElementById('descCaso').innerHTML = casos[caso].texto;
+            document.getElementById('cuboPaso6').innerHTML = '';
+            
+            // Cargamos AnimCube3 
+            let parametros = "id=cuboPaso6" + 
+                             "&move=" + casos[caso].move + 
+                             "&initrevmove=#" + 
+                             "&movetext=1" + 
+                             "&position=" + casos[caso].pos + 
+                             "&facelets=" + coloresPaso6;
+
+            AnimCube3(parametros);
+        }
+
+        // Cargar el caso estándar por defecto
+        cambiarCaso('estandar', document.querySelector('.tab-btn.active'));
+    </script>
+
+</body>
+</html>

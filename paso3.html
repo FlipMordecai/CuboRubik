@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paso 3: La Capa Central</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Paso 3: La Capa Central</h2>
+        <p>Busca una arista en la capa superior que no tenga color amarillo. Alinéala con su centro para formar una "T" invertida. Dependiendo de si debe ir a la derecha o a la izquierda, selecciona el caso y aplica el algoritmo.</p>
+        
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="cambiarCaso('derecha', this)">Hacia la Derecha</button>
+                <button class="tab-btn" onclick="cambiarCaso('izquierda', this)">Hacia la Izquierda</button>
+                <button class="tab-btn" style="color: #c0392b;" onclick="cambiarCaso('especial', this)">Caso Especial</button>
+            </div>
+
+            <div id="descCaso">
+                <strong>Algoritmo: U R U' R' U' F' U F</strong><br>
+                Aleja la pieza hacia la izquierda, sube la derecha y devuélvela para insertarla en la ranura derecha.
+            </div>
+
+            <div id="cuboPaso3" class="cubo-container"></div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="paso2.html" class="btn btn-outline">Paso anterior</a>
+            <a href="paso4.html" class="btn">Paso siguiente</a>
+        </div>
+    </div>
+
+    <script src="AnimCube3.js"></script>
+    <script>
+        // Tu mapeo de colores exacto para las dos capas resueltas (F2L)
+        const coloresPaso3 = 
+            "ddddydddd" + // U: Cara superior (solo centro amarillo)
+            "wwwwwwwww" + // D: Cara inferior (toda blanca armada)
+            "dggdggdgg" + // F: Frente (capa media y baja verdes)
+            "dbbdbbdbb" + // B: Atrás (capa media y baja azules)
+            "dddoooooo" + // L: Izquierda (capa media y baja naranjas)
+            "drrdrrdrr";  // R: Derecha (capa media y baja rojas)
+
+        // Definimos los tres casos
+        const casos = {
+            'derecha': { 
+                move: "U R U' R' U' F' U F", 
+                pos: "lluu", // Vista por defecto (Frente y Derecha)
+                texto: "<strong>Algoritmo: U R U' R' U' F' U F</strong><br>Aleja la pieza hacia la izquierda, aplica los movimientos para emparejarla y luego insértala en la derecha." 
+            },
+            'izquierda': { 
+                move: "U' L' U L U F U' F'", 
+                pos: "lldd", // Vista espejo (Frente e Izquierda)
+                texto: "<strong>Algoritmo: U' L' U L U F U' F'</strong><br>El caso espejo. Aleja la pieza hacia la derecha, empareja e inserta en la ranura izquierda." 
+            },
+            'especial': {
+                // Algoritmo avanzado que voltea la arista en su lugar para la animación
+                move: "R U2 R' U R U2 R' U F' U' F",
+                pos: "lluu",
+                texto: "<strong>Caso Especial: Arista en su lugar pero volteada</strong><br>Para resolverlo de forma sencilla: aplica el algoritmo de la <strong>Derecha</strong> una vez para sacar la pieza a la capa superior, y luego vuelve a insertarla correctamente. <em>(El simulador te muestra un atajo avanzado para voltearla directamente)</em>."
+            }
+        };
+
+        // Función para cambiar de caso
+        function cambiarCaso(lado, botonElemento) {
+            let botones = document.querySelectorAll('.tab-btn');
+            botones.forEach(btn => btn.classList.remove('active'));
+            if(botonElemento) botonElemento.classList.add('active');
+
+            document.getElementById('descCaso').innerHTML = casos[lado].texto;
+            document.getElementById('cuboPaso3').innerHTML = '';
+            
+            // Cargar AnimCube3 con rotación de cámara, algoritmo en pantalla y tus colores
+            let parametros = "id=cuboPaso3" + 
+                             "&move=" + casos[lado].move + 
+                             "&initrevmove=#" + 
+                             "&movetext=1" + 
+                             "&position=" + casos[lado].pos + 
+                             "&facelets=" + coloresPaso3;
+
+            AnimCube3(parametros);
+        }
+
+        // Cargar el caso hacia la derecha por defecto al abrir la página
+        cambiarCaso('derecha', document.querySelector('.tab-btn.active'));
+    </script>
+
+</body>
+</html>
